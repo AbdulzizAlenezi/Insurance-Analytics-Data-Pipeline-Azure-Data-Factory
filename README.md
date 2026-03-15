@@ -24,24 +24,28 @@ Code
                 └─────────────┬────────────┘
                               │
                               ▼
+
                 ┌──────────────────────────┐
                 │ Azure Data Lake Storage  │
                 │        RAW Layer         │
                 └─────────────┬────────────┘
                               │
                               ▼
+
                 ┌──────────────────────────┐
                 │  ADF Ingestion Pipelines │
                 │ (001_insurance_data_*)   │
                 └─────────────┬────────────┘
                               │
                               ▼
+
                 ┌──────────────────────────┐
                 │ Azure Data Lake Storage  │
                 │      STAGING Layer       │
                 └─────────────┬────────────┘
                               │
                               ▼
+
                 ┌──────────────────────────┐
                 │   ADF Data Flows         │
                 │ (KPI Transformations)    │
@@ -54,6 +58,7 @@ Code
                 └─────────────┬────────────┘
                               │
                               ▼
+
                 ┌──────────────────────────┐
                 │  Analytics & Reporting   │
                 │     (Power BI, etc.)     │
@@ -147,15 +152,21 @@ azure-datafactory-insurance-kpi/
 │
 ├── README.md
 │
+
+
 ├── architecture/
 │   ├── architecture-diagram.png
 │   └── dataflow-diagram.png
 │
+
+
 ├── pipelines/
 │   ├── 001_insurance_data_pipeline.json
 │   ├── 002_insurance_kpi_dashboarding.json
 │   └── Insurance_Master_Data_Pipeline.json
 │
+
+
 ├── datasets/
 │   ├── adls_input.json
 │   ├── adls_stg_claims.json
@@ -167,6 +178,8 @@ azure-datafactory-insurance-kpi/
 │   ├── kpi_1_claim_amount.json
 │   └── kpi_2_policy_type_premium_amount1.json
 │
+
+
 └── sample-data/
     ├── claims.csv
     ├── policies.csv
