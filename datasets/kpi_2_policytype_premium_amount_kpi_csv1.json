@@ -1,0 +1,26 @@
+{
+    "name": "kpi_2_policytype_premium_amount_kpi_csv1",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "adls",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "folderPath": {
+                    "value": "@concat('KPI2_Top_Policy_Premium_Amount',formatDateTime(utcNow()))",
+                    "type": "Expression"
+                },
+                "container": "output"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": []
+    }
+}

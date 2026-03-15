@@ -1,0 +1,23 @@
+{
+    "name": "adls_stg_policies1",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "adls",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "fileName": "insurance_policies.csv",
+                "container": "stg"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": []
+    }
+}

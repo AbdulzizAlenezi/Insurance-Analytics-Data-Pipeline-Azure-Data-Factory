@@ -1,0 +1,23 @@
+{
+    "name": "adls_claim_amount_kpi_parquet1",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "adls",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "Parquet",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "folderPath": {
+                    "value": "@concat('KPI1_Total_Claim_Amount',formatDateTime(utcNow()))",
+                    "type": "Expression"
+                },
+                "container": "output"
+            },
+            "compressionCodec": "snappy"
+        },
+        "schema": []
+    }
+}
