@@ -65,6 +65,8 @@ Code
                 │  Analytics & Reporting   │
                 │     (Power BI, etc.)     │
                 └──────────────────────────┘
+
+
 Key Azure Components
 Azure Data Factory – Orchestration, ingestion, and transformation
 
@@ -153,43 +155,39 @@ Code
 azure-datafactory-insurance-kpi/
 
 
-├── README.md
+- README.md
+
+- architecture/
+      - architecture-diagram.png
+      - dataflow-diagram.png
 
 
 
-
-├── architecture/
-│   ├── architecture-diagram.png
-│   └── dataflow-diagram.png
-
-
-
-├── pipelines/
-│   ├── 001_insurance_data_pipeline.json
-│   ├── 002_insurance_kpi_dashboarding.json
-│   └── Insurance_Master_Data_Pipeline.json
+- pipelines/
+  - 001_insurance_data_pipeline.json
+  - 002_insurance_kpi_dashboarding.json
+  - Insurance_Master_Data_Pipeline.json
 
 
 
-├── datasets/
-│   ├── adls_input.json
-│   ├── adls_stg_claims.json
-│   ├── adls_stg_policies.json
-│   ├── adls_claim_amount_kpi_parquet.json
-│   └── kpi_2_policytype_premium_amount_kpi_csv.json
+- datasets/
+  - adls_input.json
+  - adls_stg_claims.json
+  - adls_stg_policies.json
+  - adls_claim_amount_kpi_parquet.json
+  - kpi_2_policytype_premium_amount_kpi_csv.json
 
 
 
-├── dataflows/
-│   ├── kpi_1_claim_amount.json
-│   └── kpi_2_policy_type_premium_amount1.json
+- dataflows/
+  - kpi_1_claim_amount.json
+  - kpi_2_policy_type_premium_amount1.json
 
 
-
-└── sample-data/
-    ├── claims.csv
-    ├── policies.csv
-    └── kpi_output_example.csv
+-  sample-data/
+  -  claims.csv
+  -  policies.csv
+  -  pi_output_example.csv
 
     
 8. Governance & Operational Design
