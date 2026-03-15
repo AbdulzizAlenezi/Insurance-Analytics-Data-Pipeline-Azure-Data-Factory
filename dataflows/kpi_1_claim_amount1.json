@@ -1,0 +1,109 @@
+{
+    "name": "kpi_1_claim_amount1",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "adls_stg_policies1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "policies"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "adls_stg_claims1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "claims"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "adls_claim_amount_kpi_parquet1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "join1"
+                },
+                {
+                    "name": "select1"
+                },
+                {
+                    "name": "filter1"
+                },
+                {
+                    "name": "aggregate1"
+                },
+                {
+                    "name": "sort1"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          policy_id as string,",
+                "          customer_id as string,",
+                "          policy_type as string,",
+                "          policy_start_date as date,",
+                "          policy_end_date as date,",
+                "          premium_amount as short,",
+                "          policy_status as string,",
+                "          region as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> policies",
+                "source(output(",
+                "          claim_id as string,",
+                "          policy_id as string,",
+                "          claim_date as date,",
+                "          claim_amount as double,",
+                "          claim_status as string,",
+                "          service_provider as string,",
+                "          fraud_flag as boolean",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> claims",
+                "policies, claims join(policies@policy_id == claims@policy_id,",
+                "     joinType:'inner',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     broadcast: 'auto')~> join1",
+                "join1 select(mapColumn(",
+                "          policy_id = policies@policy_id,",
+                "          customer_id,",
+                "          policy_type,",
+                "          policy_start_date,",
+                "          policy_end_date,",
+                "          premium_amount,",
+                "          policy_status,",
+                "          region,",
+                "          claim_id,",
+                "          claim_date,",
+                "          claim_amount,",
+                "          claim_status,",
+                "          service_provider,",
+                "          fraud_flag",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select1",
+                "select1 filter(policy_status=='Active') ~> filter1",
+                "filter1 aggregate(groupBy(customer_id),",
+                "     claim_amount = sum(claim_amount)) ~> aggregate1",
+                "aggregate1 sort(desc(claim_amount, true)) ~> sort1",
+                "sort1 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     format: 'parquet',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> sink1"
+            ]
+        }
+    }
+}

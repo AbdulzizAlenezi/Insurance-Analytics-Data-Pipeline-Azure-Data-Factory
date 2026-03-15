@@ -1,0 +1,142 @@
+{
+    "name": "kpi_2_policy_type_premium_amount1",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "adls_stg_policies1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "policies"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "adls_stg_claims1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "claims"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "kpi_2_policytype_premium_amount_kpi_csv1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "join1"
+                },
+                {
+                    "name": "select1"
+                },
+                {
+                    "name": "filter1"
+                },
+                {
+                    "name": "window1"
+                },
+                {
+                    "name": "select2"
+                },
+                {
+                    "name": "filter2"
+                },
+                {
+                    "name": "select3"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          policy_id as string,",
+                "          customer_id as string,",
+                "          policy_type as string,",
+                "          policy_start_date as date,",
+                "          policy_end_date as date,",
+                "          premium_amount as short,",
+                "          policy_status as string,",
+                "          region as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> policies",
+                "source(output(",
+                "          claim_id as string,",
+                "          policy_id as string,",
+                "          claim_date as date,",
+                "          claim_amount as double,",
+                "          claim_status as string,",
+                "          service_provider as string,",
+                "          fraud_flag as boolean",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> claims",
+                "policies, claims join(policies@policy_id == claims@policy_id,",
+                "     joinType:'inner',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     broadcast: 'auto')~> join1",
+                "join1 select(mapColumn(",
+                "          policy_id = policies@policy_id,",
+                "          customer_id,",
+                "          policy_type,",
+                "          policy_start_date,",
+                "          policy_end_date,",
+                "          premium_amount,",
+                "          policy_status,",
+                "          region,",
+                "          claim_id,",
+                "          claim_date,",
+                "          claim_amount,",
+                "          claim_status,",
+                "          service_provider,",
+                "          fraud_flag",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select1",
+                "select1 filter(policy_status == 'Active' && claim_status == 'Approved') ~> filter1",
+                "filter1 window(over(policy_type),",
+                "     desc(premium_amount, true),",
+                "     claim_rank = denseRank()) ~> window1",
+                "window1 select(mapColumn(",
+                "          policy_id,",
+                "          customer_id,",
+                "          policy_type,",
+                "          premium_amount,",
+                "          region,",
+                "          claim_id,",
+                "          claim_date,",
+                "          claim_amount,",
+                "          service_provider,",
+                "          claim_rank",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select2",
+                "select2 filter(claim_rank==1) ~> filter2",
+                "filter2 select(mapColumn(",
+                "          policy_id,",
+                "          customer_id,",
+                "          policy_type,",
+                "          premium_amount,",
+                "          region,",
+                "          claim_id,",
+                "          claim_date,",
+                "          claim_amount,",
+                "          service_provider",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select3",
+                "select3 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> sink1"
+            ]
+        }
+    }
+}
