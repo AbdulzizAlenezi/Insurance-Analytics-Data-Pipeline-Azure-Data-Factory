@@ -18,6 +18,8 @@ The project reflects real‑world data engineering patterns used in modern insur
 2. Solution Architecture
 High‑Level Architecture Diagram
 Code
+
+
                 ┌──────────────────────────┐
                 │   Source CSV Files       │
                 │ (Claims, Policies, etc.) │
@@ -149,22 +151,24 @@ These KPIs support underwriting, pricing, and portfolio management.
 7. Repository Structure
 Code
 azure-datafactory-insurance-kpi/
-│
+
+
 ├── README.md
-│
+
+
 
 
 ├── architecture/
 │   ├── architecture-diagram.png
 │   └── dataflow-diagram.png
-│
+
 
 
 ├── pipelines/
 │   ├── 001_insurance_data_pipeline.json
 │   ├── 002_insurance_kpi_dashboarding.json
 │   └── Insurance_Master_Data_Pipeline.json
-│
+
 
 
 ├── datasets/
@@ -173,17 +177,21 @@ azure-datafactory-insurance-kpi/
 │   ├── adls_stg_policies.json
 │   ├── adls_claim_amount_kpi_parquet.json
 │   └── kpi_2_policytype_premium_amount_kpi_csv.json
-│
+
+
+
 ├── dataflows/
 │   ├── kpi_1_claim_amount.json
 │   └── kpi_2_policy_type_premium_amount1.json
-│
+
 
 
 └── sample-data/
     ├── claims.csv
     ├── policies.csv
     └── kpi_output_example.csv
+
+    
 8. Governance & Operational Design
 Clear separation of raw, staging, and curated layers
 
