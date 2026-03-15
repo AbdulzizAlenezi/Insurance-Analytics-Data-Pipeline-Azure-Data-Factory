@@ -187,7 +187,7 @@ azure-datafactory-insurance-kpi/
 -  sample-data/
   -  claims.csv
   -  policies.csv
-  -  pi_output_example.csv
+  -  kpi_output_example.csv
 
     
 8. Governance & Operational Design
