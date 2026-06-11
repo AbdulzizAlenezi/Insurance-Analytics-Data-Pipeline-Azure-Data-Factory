@@ -2,7 +2,8 @@
 
 This repository showcases an enterprise‑ready data engineering solution built on Azure Data Factory (ADF) for processing insurance claims and policy data. The project demonstrates how cloud‑native orchestration, scalable transformations, and structured data modeling can be used to deliver KPI‑ready datasets for analytics and reporting.
 
-1. Business Overview
+1. Business Overview:
+   
 Insurance companies depend on accurate, timely insights to evaluate portfolio performance, understand risk exposure, and support operational decision‑making. This solution transforms raw operational data into curated KPI outputs that support:
 
 Claims cost monitoring
@@ -15,7 +16,8 @@ Downstream dashboarding (e.g., Power BI)
 
 The project reflects real‑world data engineering patterns used in modern insurance analytics platforms.
 
-2. Solution Architecture
+2. Solution Architecture:
+   
 High‑Level Architecture Diagram
 Code
 
@@ -76,7 +78,7 @@ ADF Data Flows – Scalable transformations for KPI computation
 
 ARM Templates – CI/CD‑ready deployment artifacts
 
-3. Pipelines
+3. Pipelines:
 
 001_insurance_data_pipeline
 Ingests raw claims and policy data from ADLS input into the staging layer. Ensures schema consistency and prepares data for downstream transformations.
@@ -87,7 +89,7 @@ Executes KPI‑oriented dataflows to compute curated outputs such as claim amoun
 Insurance_Master_Data_Pipeline
 Coordinates the full end‑to‑end workflow, combining ingestion and KPI computation into a single orchestrated process.
 
-4. Datasets
+4. Datasets:
 
 Raw Layer
 adls_input – Raw CSV input files
@@ -104,7 +106,7 @@ adls_claim_amount_kpi_parquet – KPI output for claim amounts
 
 kpi_2_policytype_premium_amount_kpi_csv – KPI output for premium amounts by policy type
 
-5. Data Flows
+5. Data Flows:
 
 
 kpi_1_claim_amount
@@ -129,7 +131,8 @@ Premium distribution across product lines
 
 These transformations follow best practices for partitioning, schema drift handling, and scalable transformation design.
 
-6. KPI Definitions
+6. KPI Definitions:
+   
 Claim Amount KPIs
 Total Claim Amount – Sum of all claim payouts
 
@@ -150,7 +153,8 @@ Premium Growth (optional) – Period‑over‑period change
 
 These KPIs support underwriting, pricing, and portfolio management.
 
-7. Repository Structure
+7. Repository Structure:
+   
 Code
 azure-datafactory-insurance-kpi/
 
@@ -190,7 +194,8 @@ azure-datafactory-insurance-kpi/
 
 
     
-8. Governance & Operational Design
+8. Governance & Operational Design:
+   
 Clear separation of raw, staging, and curated layers
 
 Parameterized pipelines for reusability
@@ -205,7 +210,8 @@ Scalable transformations using ADF Data Flows
 
 This structure supports maintainability, auditability, and enterprise‑level scalability.
 
-9. Business Value
+9. Business Value:
+    
 This project demonstrates capabilities that matter to enterprise data teams:
 
 Cloud‑native data engineering on Azure
